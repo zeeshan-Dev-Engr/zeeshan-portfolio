@@ -1,11 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const AnimatedCursor: React.FC = () => {
   const mainDot = useRef<HTMLDivElement>(null);
   const ring1 = useRef<HTMLDivElement>(null);
   const ring2 = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
+      setIsMobile(isMobileDevice);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    // Only run cursor animation on desktop
+    if (isMobile) {
+      return;
+    }
+
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ring1X = mouseX, ring1Y = mouseY;
@@ -37,10 +52,17 @@ const AnimatedCursor: React.FC = () => {
 
     window.addEventListener('mousemove', moveCursor);
     animate();
+    
     return () => {
       window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, [isMobile]);
+
+  // Don't render cursor on mobile
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>
@@ -105,6 +127,11 @@ const AnimatedCursor: React.FC = () => {
         }
         html, body {
           cursor: none !important;
+        }
+        @media (max-width: 768px) {
+          html, body {
+            cursor: auto !important;
+          }
         }
       `}</style>
     </>
