@@ -74,7 +74,7 @@ const Hero = () => {
             </Suspense>
           </Canvas>
           <motion.img
-            src="/profile.jpg"
+            src="/profile.png"
             alt="Profile"
             className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full pointer-events-none border-4 border-cyan-400 shadow-lg z-10"
             style={{ translate: '-50% -50%' }} // بدلیں: transform کی بجائے translate
@@ -104,7 +104,7 @@ const Hero = () => {
         </Canvas>
         {/* Profile Picture Overlay (Desktop) */}
         <motion.img
-          src="/profile.jpg"
+          src="/profile.png"
           alt="Profile"
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none border-4 border-cyan-400 shadow-lg hidden lg:block"
           style={{ zIndex: 2, translate: '-50% -50%' }} // add translate
