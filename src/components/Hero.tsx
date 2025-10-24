@@ -1,5 +1,5 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { Suspense, useEffect, useState, useRef } from 'react';
+import { motion, useDragControls } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { Github, Linkedin, Mail, } from 'lucide-react';
@@ -19,17 +19,6 @@ const AnimatedSphere = ({ scale = 2 }: { scale?: number }) => {
   );
 };
 
-// Simple hook to detect mobile screen
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-  return isMobile;
-};
 
 // Typewriter effect for h1
 const useTypewriter = (text: string, speed: number = 60) => {
@@ -38,7 +27,7 @@ const useTypewriter = (text: string, speed: number = 60) => {
     let i = 0;
     setDisplayed('');
     const interval = setInterval(() => {
-      setDisplayed((prev) => text.slice(0, i + 1));
+      setDisplayed(text.slice(0, i + 1));
       i++;
       if (i >= text.length) clearInterval(interval);
     }, speed);
@@ -55,7 +44,8 @@ const Hero = () => {
     { icon: CredlyIcon, href: 'https://www.credly.com/users/zeeshan-anwar.af7e7562/edit#credly', label: 'Credly' },
   ];
 
-  const isMobile = useIsMobile();
+  const dragControls = useDragControls();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Typewriter for h1
   const heading = useTypewriter('Zeeshan\nAnwar', 300);
@@ -64,7 +54,11 @@ const Hero = () => {
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {/* Mobile: Profile Image + Sphere at Top */}
       <div className="w-full flex flex-col items-center justify-center mt-6 mb-0 lg:hidden">
-        <div className="relative flex items-center justify-center w-56 h-56 mb-0" style={{ background: 'transparent' }}>
+        <div 
+          ref={containerRef}
+          className="relative flex items-center justify-center w-56 h-56 mb-0" 
+          style={{ background: 'transparent' }}
+        >
           <Canvas camera={{ position: [0, 0, 3] }} className="absolute top-0 left-0 w-full h-full z-0" style={{ background: 'transparent' }}>
             <Suspense fallback={null}>
               <OrbitControls enableZoom={false} enablePan={false} />
@@ -76,8 +70,18 @@ const Hero = () => {
           <motion.img
             src="/profile.png"
             alt="Profile"
-            className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full pointer-events-none border-4 border-cyan-400 shadow-lg z-10"
-            style={{ translate: '-50% -50%' }} // بدلیں: transform کی بجائے translate
+            className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full border-4 border-cyan-400 shadow-lg z-10 cursor-move"
+            style={{ translate: '-50% -50%' }}
+            drag
+            dragControls={dragControls}
+            dragConstraints={containerRef}
+            dragElastic={0.1}
+            dragMomentum={false}
+            whileDrag={{ 
+              scale: 1.1, 
+              rotate: 5,
+              boxShadow: "0 0 20px rgba(6, 182, 212, 0.8)"
+            }}
             animate={{
               y: [0, -12, 0, 12, 0],
               scale: [1, 1.04, 1, 0.98, 1],
@@ -87,6 +91,12 @@ const Hero = () => {
               duration: 4,
               repeat: Infinity,
               ease: "easeInOut",
+            }}
+            onDragStart={() => {
+              // Pause the floating animation while dragging
+            }}
+            onDragEnd={() => {
+              // Resume the floating animation
             }}
           />
         </div>
@@ -106,8 +116,23 @@ const Hero = () => {
         <motion.img
           src="/profile.png"
           alt="Profile"
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none border-4 border-cyan-400 shadow-lg hidden lg:block"
-          style={{ zIndex: 2, translate: '-50% -50%' }} // add translate
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full border-4 border-cyan-400 shadow-lg hidden lg:block cursor-move"
+          style={{ zIndex: 2, translate: '-50% -50%' }}
+          drag
+          dragControls={dragControls}
+          dragConstraints={{
+            left: -200,
+            right: 200,
+            top: -200,
+            bottom: 200
+          }}
+          dragElastic={0.1}
+          dragMomentum={false}
+          whileDrag={{ 
+            scale: 1.05, 
+            rotate: 3,
+            boxShadow: "0 0 30px rgba(6, 182, 212, 0.9)"
+          }}
           animate={{
             y: [0, -18, 0, 18, 0],
             scale: [1, 1.03, 1, 0.97, 1],
@@ -117,6 +142,12 @@ const Hero = () => {
             duration: 5,
             repeat: Infinity,
             ease: "easeInOut",
+          }}
+          onDragStart={() => {
+            // Pause the floating animation while dragging
+          }}
+          onDragEnd={() => {
+            // Resume the floating animation
           }}
         />
       </div>

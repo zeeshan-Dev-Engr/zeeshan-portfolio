@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { GraduationCap, Award, Calendar, MapPin } from 'lucide-react';
@@ -54,7 +53,7 @@ const Education = () => {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-orbitron font-bold mb-6">
@@ -83,8 +82,12 @@ const Education = () => {
             </div>
 
             <motion.div
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-300"
+              whileHover={{ 
+                scale: 1.02, 
+                y: -5,
+                transition: { duration: 0.15, ease: "easeOut" }
+              }}
+              className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-150"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -95,7 +98,7 @@ const Education = () => {
                     {education.university}
                   </p>
                 </div>
-                <span className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-rajdhani font-medium">
+                <span className="px-4 bg-green-500 text-white rounded-full text-center text-sm font-rajdhani font-bold">
                   {education.status}
                 </span>
               </div>
@@ -136,8 +139,12 @@ const Education = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.02, x: 10 }}
-                  className="glass-effect p-4 rounded-lg hover:neon-glow transition-all duration-300"
+                  whileHover={{ 
+                    scale: 1.02, 
+                    x: 10,
+                    transition: { duration: 0.15, ease: "easeOut" }
+                  }}
+                  className="glass-effect p-4 rounded-lg hover:neon-glow transition-all duration-150"
                 >
                   <div className="flex items-center">
                     <div className="text-3xl mr-4">
@@ -206,7 +213,11 @@ const Education = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
-              className="glass-effect p-6 rounded-lg text-center hover:neon-glow transition-all duration-300"
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.15, ease: "easeOut" }
+              }}
+              className="glass-effect p-6 rounded-lg text-center hover:neon-glow transition-all duration-150"
             >
               <div className="text-3xl md:text-4xl font-orbitron font-bold gradient-text mb-2">
                 {stat.value}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react';
@@ -11,11 +11,6 @@ const Contact = () => {
   });
 
   const form = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,21 +25,14 @@ const Contact = () => {
       form.current,
       publicKey
     )
-    .then((result) => {
+    .then(() => {
       setSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
       form.current?.reset();
-    }, (error) => {
+    }, () => {
       setSubmitted(false);
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const contactInfo = [
     {
@@ -89,7 +77,7 @@ const Contact = () => {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-orbitron font-bold mb-6">
@@ -118,7 +106,10 @@ const Contact = () => {
                     Name
                   </label>
                   <motion.input
-                    whileFocus={{ scale: 1.02 }}
+                    whileFocus={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.15, ease: "easeOut" }
+                    }}
                     type="text"
                     id="name"
                     name="name"
@@ -133,7 +124,10 @@ const Contact = () => {
                     Email
                   </label>
                   <motion.input
-                    whileFocus={{ scale: 1.02 }}
+                    whileFocus={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.15, ease: "easeOut" }
+                    }}
                     type="email"
                     id="email"
                     name="email"
@@ -148,7 +142,10 @@ const Contact = () => {
                     Message
                   </label>
                   <motion.textarea
-                    whileFocus={{ scale: 1.02 }}
+                    whileFocus={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.15, ease: "easeOut" }
+                    }}
                     id="message"
                     name="message"
                     required
@@ -161,10 +158,16 @@ const Contact = () => {
                 <input type="hidden" name="time" value={new Date().toLocaleString()} />
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.15, ease: "easeOut" }
+                  }}
+                  whileTap={{ 
+                    scale: 0.95,
+                    transition: { duration: 0.1, ease: "easeOut" }
+                  }}
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-rajdhani font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 transition-all duration-300 flex items-center justify-center"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-rajdhani font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 transition-all duration-150 flex items-center justify-center"
                 >
                   <Send size={20} className="mr-2" />
                   Send Message
@@ -198,7 +201,10 @@ const Contact = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                    whileHover={{ x: 10 }}
+                    whileHover={{ 
+                      x: 10,
+                      transition: { duration: 0.15, ease: "easeOut" }
+                    }}
                     className="flex items-center space-x-4"
                   >
                     <div className="p-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full">
@@ -236,8 +242,12 @@ const Contact = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                    whileHover={{ scale: 1.05, x: 10 }}
-                    className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                    whileHover={{ 
+                      scale: 1.05, 
+                      x: 10,
+                      transition: { duration: 0.15, ease: "easeOut" }
+                    }}
+                    className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors duration-150"
                   >
                     <social.icon size={24} className="text-cyan-400" />
                     <div>

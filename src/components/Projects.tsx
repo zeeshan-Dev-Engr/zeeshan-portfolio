@@ -270,12 +270,7 @@ const Projects = () => {
         {visibleCount < projects.length && (
           <button
             onClick={() => setVisibleCount(v => v + 3)}
-            className="mx-auto mt-8 flex items-center gap-2 px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition"
-          >
-            <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="white" strokeWidth="4" fill="none"/>
-              <path className="opacity-75" fill="white" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
-            </svg>
+            className="mx-auto mt-8 flex items-center gap-2 px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition">
             Load More
           </button>
         )}

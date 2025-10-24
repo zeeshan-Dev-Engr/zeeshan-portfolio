@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Brain, Code, Rocket, Globe } from 'lucide-react';
@@ -73,9 +72,16 @@ const About = () => {
               key={feature.title}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              whileHover={{ y: -10, scale: 1.05 }}
-              className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-300"
+              whileHover={{ 
+                y: -10, 
+                scale: 1.05,
+                transition: { duration: 0.2, ease: "easeOut" }
+              }}
+              transition={{ 
+                duration: 0.8, 
+                delay: index * 0.2
+              }}
+              className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-150"
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="p-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full">
@@ -104,8 +110,16 @@ const About = () => {
               key={skill.name}
               initial={{ opacity: 0, y: 30, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: idx * 0.12, type: 'spring', stiffness: 200 }}
-              whileHover={{ scale: 1.2, rotate: 8 }}
+              whileHover={{ 
+                scale: 1.2, 
+                rotate: 8,
+                transition: { duration: 0.15, ease: "easeOut" }
+              }}
+              transition={{ 
+                delay: idx * 0.12, 
+                type: 'spring', 
+                stiffness: 200
+              }}
               className="flex flex-col items-center"
             >
               <div className="text-5xl mb-2">{skill.icon}</div>
