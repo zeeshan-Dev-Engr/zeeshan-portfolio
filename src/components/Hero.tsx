@@ -53,10 +53,10 @@ const Hero = () => {
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {/* Mobile: Profile Image + Sphere at Top */}
-      <div className="w-full flex flex-col items-center justify-center mt-16 mb-6 lg:hidden">
+      <div className="w-full flex flex-col items-center justify-center mt-12 mb-4 lg:hidden">
         <div 
           ref={containerRef}
-          className="relative flex items-center justify-center w-56 h-56 mb-4" 
+          className="relative flex items-center justify-center w-56 h-56 mb-2" 
           style={{ background: 'transparent' }}
         >
           <Canvas camera={{ position: [0, 0, 3] }} className="absolute top-0 left-0 w-full h-full z-0" style={{ background: 'transparent' }}>
@@ -153,13 +153,13 @@ const Hero = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-screen w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-12 items-center w-full">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-8 -mt-4 lg:mt-0"
           >
             <motion.div
               initial={{ opacity: 0, y: 40 }}
