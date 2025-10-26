@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Brain, Code, Rocket, Globe } from 'lucide-react';
-import { SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiMongodb, SiTypescript, SiPython, SiTailwindcss, SiJavascript } from 'react-icons/si';
-import { FaRobot } from 'react-icons/fa';
+import { SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiMongodb, SiTypescript, SiPython, SiTailwindcss, SiJavascript, SiDocker, SiFigma, SiVercel, SiFirebase } from 'react-icons/si';
+import { FaRobot, FaHtml5, FaCss3Alt, FaGitAlt } from 'react-icons/fa';
+
 
 const About = () => {
   const [ref, inView] = useInView({
@@ -34,16 +35,23 @@ const About = () => {
   ];
 
   const skills = [
-    { name: 'React.js', icon: <SiReact color="#61DAFB" /> },
-    { name: 'Next.js', icon: <SiNextdotjs color="#000" /> },
-    { name: 'Node.js', icon: <SiNodedotjs color="#3C873A" /> },
-    { name: 'Express.js', icon: <SiExpress color="#000" /> },
-    { name: 'MongoDB', icon: <SiMongodb color="#47A248" /> },
-    { name: 'TypeScript', icon: <SiTypescript color="#3178C6" /> },
-    { name: 'JavaScript', icon: <SiJavascript color="#F7DF1E" /> },
-    { name: 'Python', icon: <SiPython color="#3776AB" /> },
-    { name: 'AI', icon: <FaRobot color="#FFB800" /> },
-    { name: 'Tailwind CSS', icon: <SiTailwindcss color="#38BDF8" /> },
+    { name: 'React.js', icon: <SiReact color="#61DAFB" />, color: '#61DAFB' },
+    { name: 'Next.js', icon: <SiNextdotjs color="#000" />, color: '#000000' },
+    { name: 'Node.js', icon: <SiNodedotjs color="#3C873A" />, color: '#3C873A' },
+    { name: 'Express.js', icon: <SiExpress color="#000" />, color: '#68D391' },
+    { name: 'MongoDB', icon: <SiMongodb color="#47A248" />, color: '#47A248' },
+    { name: 'TypeScript', icon: <SiTypescript color="#3178C6" />, color: '#3178C6' },
+    { name: 'JavaScript', icon: <SiJavascript color="#F7DF1E" />, color: '#F7DF1E' },
+    { name: 'Python', icon: <SiPython color="#3776AB" />, color: '#3776AB' },
+    { name: 'AI', icon: <FaRobot color="#FFB800" />, color: '#FFB800' },
+    { name: 'Tailwind CSS', icon: <SiTailwindcss color="#38BDF8" />, color: '#38BDF8' },
+    { name: 'HTML5', icon: <FaHtml5 color="#E34F26" />, color: '#E34F26' },
+    { name: 'CSS3', icon: <FaCss3Alt color="#1572B6" />, color: '#1572B6' },
+    { name: 'Git', icon: <FaGitAlt color="#F05032" />, color: '#F05032' },
+    { name: 'Docker', icon: <SiDocker color="#2496ED" />, color: '#2496ED' },
+    { name: 'Figma', icon: <SiFigma color="#F24E1E" />, color: '#F24E1E' },
+    { name: 'Vercel', icon: <SiVercel color="#000" />, color: '#000000' },
+    { name: 'Firebase', icon: <SiFirebase color="#FFCA28" />, color: '#FFCA28' },
   ];
 
   return (
@@ -98,34 +106,117 @@ const About = () => {
           ))}
         </div>
 
-        {/* Animated Skills Icons */}
+        {/* Rotating Circular Skills Ring */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-8 mt-16"
+          className="mt-20 flex justify-center"
         >
-          {skills.map((skill, idx) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, y: 30, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              whileHover={{ 
-                scale: 1.2, 
-                rotate: 8,
-                transition: { duration: 0.15, ease: "easeOut" }
-              }}
+          <div className="w-[500px] h-[500px] relative group">
+            {/* Circular Ring Background */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-96 h-96 rounded-full border-2 border-cyan-400/20 bg-gradient-to-r from-cyan-400/5 to-blue-500/5 backdrop-blur-sm" />
+            </div>
+            
+            {/* Rotating Container */}
+            <motion.div 
+              className="absolute inset-0 pointer-events-auto"
+              animate={{ rotate: 360 }}
               transition={{ 
-                delay: idx * 0.12, 
-                type: 'spring', 
-                stiffness: 200
+                duration: 20, 
+                repeat: Infinity, 
+                ease: "linear" 
               }}
-              className="flex flex-col items-center"
+              whileHover={{ 
+                rotate: 0,
+                transition: { duration: 0.5, ease: "easeOut" }
+              }}
             >
-              <div className="text-5xl mb-2">{skill.icon}</div>
-              <span className="text-xs text-gray-300 font-rajdhani">{skill.name}</span>
+              {/* Moving Icons in Circle */}
+              {skills.map((skill, index) => {
+                const angle = (index / skills.length) * Math.PI * 2;
+                const radius = 180; // Increased radius for more spacing
+                const x = Math.cos(angle) * radius + 250; // Center offset
+                const y = Math.sin(angle) * radius + 250; // Center offset
+                
+                return (
+                  <motion.div
+                    key={skill.name}
+                    className="absolute flex items-center justify-center cursor-pointer group"
+                    style={{
+                      left: x - 30,
+                      top: y - 30,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={inView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ 
+                      delay: 0.8 + index * 0.05,
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 20
+                    }}
+                    whileHover={{ 
+                      scale: 1.3, 
+                      y: -15,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
+                  >
+                    {/* Icon Container */}
+                    <motion.div 
+                      className="relative w-20 h-20 rounded-full flex items-center justify-center shadow-xl border-2 overflow-hidden"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${skill.color}25, ${skill.color}08)`,
+                        borderColor: skill.color,
+                        boxShadow: `0 6px 25px ${skill.color}40`
+                      }}
+                      whileHover={{
+                        background: `linear-gradient(135deg, ${skill.color}60, ${skill.color}25)`,
+                        boxShadow: `0 8px 35px ${skill.color}70`,
+                        borderColor: '#FFFFFF',
+                        transition: { duration: 0.3 }
+                      }}
+                    >
+                      {/* Glow Effect */}
+                      <div 
+                        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{
+                          background: `radial-gradient(circle at center, ${skill.color}30, transparent 70%)`
+                        }}
+                      />
+                      
+                      {/* Icon */}
+                      <motion.div 
+                        className="relative text-3xl z-10 transition-all duration-300"
+                        style={{ color: skill.color }}
+                        whileHover={{
+                          scale: 1.15,
+                          color: '#FFFFFF',
+                          filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.6))',
+                          transition: { duration: 0.3 }
+                        }}
+                      >
+                        {skill.icon}
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
-          ))}
+            
+            {/* Center Glow */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-500/20 blur-xl animate-pulse" />
+            </div>
+            
+            {/* Skills Heading - Appears on Hover */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <h1 className="text-4xl font-orbitron font-bold gradient-text text-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out">
+                Skills
+              </h1>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
