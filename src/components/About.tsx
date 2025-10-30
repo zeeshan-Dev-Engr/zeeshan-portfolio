@@ -106,17 +106,17 @@ const About = () => {
           ))}
         </div>
 
-        {/* Rotating Circular Skills Ring */}
+        {/* Rotating Circular Skills Ring - Hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-20 flex justify-center"
+          className="mt-20 hidden md:flex justify-center"
         >
           <div className="w-[500px] h-[500px] relative group">
             {/* Circular Ring Background */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-96 h-96 rounded-full border-2 border-cyan-400/20 bg-gradient-to-r from-cyan-400/5 to-blue-500/5 backdrop-blur-sm" />
+              <div className="w-[360px] h-[360px] rounded-full border-2 border-cyan-400/20 bg-gradient-to-r from-cyan-400/5 to-blue-500/5 backdrop-blur-sm" />
             </div>
             
             {/* Rotating Container */}
@@ -136,8 +136,8 @@ const About = () => {
               {/* Moving Icons in Circle */}
               {skills.map((skill, index) => {
                 const angle = (index / skills.length) * Math.PI * 2;
-                const radius = 180; // Increased radius for more spacing
-                const x = Math.cos(angle) * radius + 250; // Center offset
+                const radius = 180; // Ring radius
+                const x = Math.cos(angle) * radius + 250; // Center offset (250 is half of 500px container)
                 const y = Math.sin(angle) * radius + 250; // Center offset
                 
                 return (
@@ -145,8 +145,8 @@ const About = () => {
                     key={skill.name}
                     className="absolute flex items-center justify-center cursor-pointer group"
                     style={{
-                      left: x - 30,
-                      top: y - 30,
+                      left: x - 40, // Half of icon container width (80px / 2)
+                      top: y - 40,  // Half of icon container height (80px / 2)
                       transform: 'translate(-50%, -50%)'
                     }}
                     initial={{ opacity: 0, scale: 0 }}
